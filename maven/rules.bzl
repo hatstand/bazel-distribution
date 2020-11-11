@@ -252,13 +252,20 @@ def _generate_pom_xml(ctx, maven_coordinates):
 
     # Indentation of the DEP_BLOCK string is such, so that it renders nicely in the output pom.xml
     DEP_BLOCK = """        <dependency>
-            <groupId>{0}</groupId>
-            <artifactId>{1}</artifactId>
-            <version>{2}</version>
+            <groupId>{groupId}</groupId>
+            <artifactId>{artifactId}</artifactId>
+            <version>{version}</version>
         </dependency>"""
     xml_tags = []
     for coord in deps_coordinates:
-        xml_tags.append(DEP_BLOCK.format(*coord.split(":")))
+        coordinates = coord.split(":")
+        groupId, artifactId = coordinates[0:2]
+        version = coordinates[-1]
+        xml_tags.append(DEP_BLOCK.format(
+          groupId=groupId,
+          artifactId=artifactId,
+          version=version,
+        ))
 
     license_name = "LICENSE_NAME"
     license_url = "LICENSE_URL"
