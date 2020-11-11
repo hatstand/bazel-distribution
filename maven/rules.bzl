@@ -208,7 +208,7 @@ def _parse_maven_artifact(coordinate_string):
     coordinates = coordinate_string.split(':')
     print(coordinates)
     print(coordinates[0:2])
-    print(coordinates[-2])
+    print(coordinates[-1])
     group_id, artifact_id = coordinates[0:2]
     version = coordinates[-1]
     return group_id + ":" + artifact_id, version
