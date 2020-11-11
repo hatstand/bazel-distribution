@@ -251,7 +251,7 @@ def _generate_pom_xml(ctx, maven_coordinates):
     # reconstruct full coordinates
     maven_pom_deps = [artifact + ":" + version for artifact, version in deps.items()]
 
-    maven_pom_deps = direct_pom_deps + transitive_pom_deps
+    # maven_pom_deps = direct_pom_deps + transitive_pom_deps
 
     deps_coordinates = depset(maven_pom_deps).to_list()
 
