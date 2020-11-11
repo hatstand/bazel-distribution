@@ -211,7 +211,9 @@ def _parse_maven_artifact(coordinate_string):
     return group_id + ":" + artifact_id, version
 
 def _parse_maven_coordinates(coordinate_string):
-    group_id, artifact_id, version = coordinate_string.split(':')
+    coordinates = coordinate_string.split(':')
+    group_id, artifact_id = coordinates[0:2]
+    version = coordinates[-1]
     if version != '{pom_version}':
         fail('should assign {pom_version} as Maven version via `tags` attribute')
     return struct(
