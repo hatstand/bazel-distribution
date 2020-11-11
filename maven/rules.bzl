@@ -205,7 +205,9 @@ mit_license_text = """
 
 def _parse_maven_artifact(coordinate_string):
     """ Return the artifact (group + artifact) and version """
-    group_id, artifact_id, version = coordinate_string.split(':')
+    coordinates = coordinate_string.split(':')
+    group_id, artifact_id = coordinates[0:2]
+    version = coordinates[-1]
     return group_id + ":" + artifact_id, version
 
 def _parse_maven_coordinates(coordinate_string):
