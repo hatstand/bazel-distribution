@@ -206,17 +206,12 @@ mit_license_text = """
 def _parse_maven_artifact(coordinate_string):
     """ Return the artifact (group + artifact) and version """
     coordinates = coordinate_string.split(':')
-    print(coordinates)
-    print(coordinates[0:2])
-    print(coordinates[-1])
     group_id, artifact_id = coordinates[0:2]
     version = coordinates[-1]
     return group_id + ":" + artifact_id, version
 
 def _parse_maven_coordinates(coordinate_string):
-    coordinates = coordinate_string.split(':')
-    group_id, artifact_id = coordinates[0:2]
-    version = coordinates[-1]
+    group_id, artifact_id, version = coordinate_string.split(':')
     if version != '{pom_version}':
         fail('should assign {pom_version} as Maven version via `tags` attribute')
     return struct(
@@ -240,6 +235,8 @@ def _generate_pom_xml(ctx, maven_coordinates):
         version = ctx.attr.version_overrides.get(artifact, found_version) # default to collected version if not overriden
         deps[artifact] = version
 
+    print(deps)
+
 
     # only keep overriden transitive deps
     for transitive_dep in transitive_pom_deps:
@@ -247,6 +244,9 @@ def _generate_pom_xml(ctx, maven_coordinates):
         overriden_version = ctx.attr.version_overrides.get(artifact)
         if artifact not in deps and overriden_version != None:
             deps[artifact] = overriden_version
+
+
+    print(deps)
 
     # reconstruct full coordinates
     maven_pom_deps = [artifact + ":" + version for artifact, version in deps.items()]
